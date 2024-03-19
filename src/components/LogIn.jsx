@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 LogIn.propTypes = {
 
@@ -33,7 +34,7 @@ function LogIn(props) {
         />
         <br></br>
 
-        <a className='hover:underline hover:text-blue-600' href="./">Don't have an account? Register here!</a>
+        <Link className='hover:underline hover:text-blue-600' to="/register">Don't have an account? Register here!</Link>
       </form>
     </div>
   );

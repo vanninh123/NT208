@@ -3,14 +3,16 @@ import { Routes, Route } from 'react-router-dom';
 import Register from './components/Register';
 import LogIn from './components/LogIn';
 import Header from './components/Header';
-import Input from './components/InputBeforeLogIn';
+import InputBeforeLogIn from './components/InputBeforeLogIn';
+import HeaderAfterLogIn from './components/HeaderAfterLogIn';
+import InputAfterLogIn from './components/InputAfterLogIn';
 
 function App() {
   return (
     <div className=''>
-      <Header />
+      <HeaderAfterLogIn />
       <Routes>
-        <Route path='/' element={<Input />} />
+        <Route path='/' element={<InputAfterLogIn />} />
         <Route path='/register' element={<Register />} />
         <Route path='/login' element={<LogIn />} />
       </Routes>
