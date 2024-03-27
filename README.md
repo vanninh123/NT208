@@ -29,6 +29,7 @@ Written using:
 - React.js
 - Tailwind CSS
 - Axios
+
 The frontend is where the user will interact with, and handles talking with backend infrastructure to request actions/fetch data.
 
 ### Backend
@@ -36,6 +37,7 @@ Written using:
 - Flask (Python)
 - [pywb](https://github.com/webrecorder/pywb)
 - MySQL
+
 The backend will host the app's APIs and main functionalities, such as crawling websites, archiving and retrieving snapshots.
 
 ## API interface
