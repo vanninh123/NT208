@@ -1,6 +1,6 @@
 # Archiver - NT208 project
-
-Web archiving is the process of collecting portions of the World Wide Web to ensure the information is preserved in an archive for future researchers, historians, and the public.
+![alt text](unnamed.png)
+Web archiving is the process of collecting portions of the World Wide Web to ensure the information is preserved in an archive for future researchers, histordians, and the public.
 
 **Archiver** is a simple project that let users archive a website, and view previously taken web snapshots.
 
