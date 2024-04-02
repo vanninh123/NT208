@@ -1,70 +1,85 @@
-# Getting Started with Create React App
+# Archiver - NT208 project
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Web archiving is the process of collecting portions of the World Wide Web to ensure the information is preserved in an archive for future researchers, historians, and the public.
 
-## Available Scripts
+**Archiver** is a simple project that let users archive a website, and view previously taken web snapshots.
 
-In the project directory, you can run:
+## Key features
+- Dead simple. Just paste your URL and let it handle the rest.
+- Optionally crawl and archive the whole website.
+- Snapshots are saved as ISO standard WARC format.
+- ...?
 
-### `npm start`
+## Usage
+### Guest users
+Just simply paste your URL and press "Go".
+- If that URL is already in our database, you will be prompted to select which snapshot you want to view.
+- If not, the app will then start archiving that website. You will be redirected to the result after it's done archiving.
+Guest users are allowed to make 3 archiving requests a day, and view 10 web snapshots a day.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Registered users
+Registered users enjoys the same functionality as guest users, plus:
+- Unlimited archiving requests and snapshot view times.
+- Bookmark your favorite snapshots.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Project structure
+This project contains 2 components: `Frontend` and `Backend`.
+### Frontend
+Written using:
+- React.js
+- Tailwind CSS
+- Axios
+The frontend is where the user will interact with, and handles talking with backend infrastructure to request actions/fetch data.
 
-### `npm test`
+### Backend
+Written using:
+- Flask (Python)
+- [pywb](https://github.com/webrecorder/pywb)
+- MySQL
+The backend will host the app's APIs and main functionalities, such as crawling websites, archiving and retrieving snapshots.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## API interface
+#### /auth/login
+Params: `username` (str), `password` (str)  
+Return:
+```
+{"success": false, "reason": "Wrong username or password."}
+{"success": true, "sessionid": "AAAAbbbbCCCC11112222eeee"}
+```
 
-### `npm run build`
+#### /auth/getsession
+Params: `sessionid`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+#### /auth/logout
+Params: `sessionid`
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+#### /archive/isarchived
+Params: `sessionid`, `url`  
+Return: `state` = ( `not_archived`, `archiving`, `archived` )
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+#### /archive/doarchive
+Params: `sessionid`, `url`  
 
-### `npm run eject`
+#### /archive/list
+Params: `sessionid`, `url`  
+Return:
+```
+list: [  
+  id: "name",
+  1: "2023-12-02",  
+  2: "2024-03-14",  
+  ....  
+]
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+#### /archive/view
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+#### /bookmark/recent
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+#### /bookmark/add
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+#### /bookmark/list
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
 
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
