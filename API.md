@@ -140,7 +140,7 @@ Sau khi gọi `/archive/check` nếu trả về trạng thái `archived` --> Ti�
 ```
 - Convert timestamp sang Ngày-Tháng-Năm để hiển thị cho user
 
-**/archive/view**
+**/archive/view_raw**
 ```JSON
 {
 	"session_id": "123e4567-e89b-12d3-a456-426614174000",

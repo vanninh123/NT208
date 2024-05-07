@@ -1,0 +1,36 @@
+version: '3.1'
+
+services:
+
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: Passw0rd321
+    volumes:
+      - ./backend/storage/db:/data/db:rw
+
+  # mongo-express:
+  #   image: mongo-express
+  #   restart: always
+  #   ports:
+  #     - 8081:8081
+  #   environment:
+  #     ME_CONFIG_MONGODB_ADMINUSERNAME: root
+  #     ME_CONFIG_MONGODB_ADMINPASSWORD: Passw0rd321
+  #     ME_CONFIG_MONGODB_URL: mongodb://root:Passw0rd321@mongo:27017/
+  #     ME_CONFIG_BASICAUTH: 0
+
+  singlefile:
+    build: ./backend/singlefile
+
+  main-api:
+    build: ./backend/main-api
+    volumes:
+      - ./backend/storage/snapshots:/snapshots:rw
+
+  nginx:
+    build: ./backend/nginx
+    ports:
+      - 80:8000
