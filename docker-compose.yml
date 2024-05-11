@@ -24,9 +24,11 @@ services:
 
   singlefile:
     build: ./backend/singlefile
+    stop_signal: SIGINT
 
   main-api:
     build: ./backend/main-api
+    stop_signal: SIGINT
     volumes:
       - ./backend/storage/snapshots:/snapshots:rw
 
