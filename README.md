@@ -23,63 +23,17 @@ Registered users enjoys the same functionality as guest users, plus:
 - Bookmark your favorite snapshots.
 
 ## Project structure
-This project contains 2 components: `Frontend` and `Backend`.
+This project contains 2 main components: `Frontend` and `Backend`.
 ### Frontend
-Written using:
+Developed using:
 - React.js
 - Tailwind CSS
 - Axios
 The frontend is where the user will interact with, and handles talking with backend infrastructure to request actions/fetch data.
 
 ### Backend
-Written using:
+Developed using:
 - Flask (Python)
-- [pywb](https://github.com/webrecorder/pywb)
-- MySQL
+- MongoDB
+- [SingleFile](https://github.com/gildas-lormeau/SingleFile)
 The backend will host the app's APIs and main functionalities, such as crawling websites, archiving and retrieving snapshots.
-
-## API interface
-#### /auth/login
-Params: `username` (str), `password` (str)  
-Return:
-```
-{"success": false, "reason": "Wrong username or password."}
-{"success": true, "sessionid": "AAAAbbbbCCCC11112222eeee"}
-```
-
-#### /auth/getsession
-Params: `sessionid`
-
-#### /auth/logout
-Params: `sessionid`
-
-#### /archive/isarchived
-Params: `sessionid`, `url`  
-Return: `state` = ( `not_archived`, `archiving`, `archived` )
-
-#### /archive/doarchive
-Params: `sessionid`, `url`  
-
-#### /archive/list
-Params: `sessionid`, `url`  
-Return:
-```
-list: [  
-  id: "name",
-  1: "2023-12-02",  
-  2: "2024-03-14",  
-  ....  
-]
-```
-
-#### /archive/view
-
-#### /bookmark/recent
-
-#### /bookmark/add
-
-#### /bookmark/list
-
-
-
-
