@@ -37,3 +37,64 @@ Developed using:
 - MongoDB
 - [SingleFile](https://github.com/gildas-lormeau/SingleFile)
 The backend will host the app's APIs and main functionalities, such as crawling websites, archiving and retrieving snapshots.
+
+## Developers manual
+### Basic operations
+- Start all services:  `docker compose up -d`
+- View all logs:  `docker compose logs`
+  - View only logs from "main-api" service:  `docker compose logs main-api`
+- Rebuild "main-api" service after making changes:  `docker compose up -d --build main-api`
+- Stop all services:  `docker compose down`
+
+### API flow
+**1. Check if URL is already archived**
+```
+GET /api/archive/is_archived?url=https://www.github.com
+```
+```
+{"status":"not_archived","success":true}
+// status = not_archived / archiving / archived / unreachable
+```
+**2. Start archiving a webpage:**
+```
+GET /api/archive/do_archive?url=https://www.github.com
+```
+```
+{"msg":"Archiving target site, please wait.","success":true}
+```
+**3. Keep polling `/api/archive/is_archived` to check for progress, until it either returns `archived` or `unreachable`**
+```
+GET /api/archive/is_archived?url=https://www.github.com
+```
+```
+{"status":"not_archived","success":true}
+```
+**4. Get the list of archived snapshots of the requested URL**
+```
+GET /api/archive/list?url=https://www.github.com
+```
+```
+{
+    "snapshot_list": [
+        {
+            "created_time": "2024-05-11 20:17:42 UTC+0000",
+            "snapshot_id": "1715458662.5612893"
+        },
+        {
+            "created_time": "2024-05-07 20:24:11 UTC+0000",
+            "snapshot_id": "1715113451.011099"
+        }
+    ],
+    "success": true
+}
+```
+**5. View URL's archived snapshot**
+```
+GET /api/archive/view_raw?snapshot_id=1715113451.011099
+```
+```
+<!DOCTYPE html> <html> .................
+```
+
+### Troubleshooting
+- "Have you tried turning it off and on again?"  `systemctl restart docker`
