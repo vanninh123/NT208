@@ -78,7 +78,9 @@ def default():
 def is_archived():
 	RESPONSE = {}
 	url = request.args.get("url")
-	if (url == None):
+	if (not url):
+		url = request.json["url"]
+	if (not url):
 		RESPONSE["success"] = False
 		RESPONSE["msg"] = "URL is empty"
 	elif (not validators.url(url)):
@@ -100,6 +102,8 @@ def is_archived():
 def do_archive():
 	RESPONSE = {}
 	url = request.args.get("url")
+	if (not url):
+		url = request.json["url"]
 	if (url == None):
 		RESPONSE["success"] = False
 		RESPONSE["msg"] = "URL is empty"
@@ -116,6 +120,8 @@ def do_archive():
 def list_snapshots():
 	RESPONSE = {}
 	url = request.args.get("url")
+	if (not url):
+		url = request.json["url"]
 	if (url == None):
 		RESPONSE["success"] = False
 		RESPONSE["msg"] = "URL is empty"
@@ -141,7 +147,8 @@ def list_snapshots():
 def view_snapshot():
 	RESPONSE = {}
 	sid = request.args.get("snapshot_id")
-
+	if (not sid):
+		sid = request.json["snapshot_id"]
 	snapshot_list = db["snapshots"]
 	query = {"snapshot_id": sid}
 	query_result = snapshot_list.find_one(query)
