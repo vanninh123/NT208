@@ -149,12 +149,8 @@ Sau khi gọi `/archive/check` nếu trả về trạng thái `archived` --> Ti�
 ```
 
 ```JSON
-{
-	"success": true,
-	"view_path": "/path/to/view",
-}
+<raw html>
 ```
-- Redirect user đến path trên để xem snapshot
 
 ---
 # Misc.
