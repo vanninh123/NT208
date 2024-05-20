@@ -12,7 +12,6 @@ function HeaderAfterLogIn(props) {
     return () => clearInterval(intervalId);
   }, []);
   const [darkMode, setDarkMode] = useState(currentHour >= 17 || currentHour <= 5);
-  console.log(darkMode)
   useEffect(() => {
     darkMode ? document.body.classList.add('dark') : document.body.classList.remove('dark');
   })
