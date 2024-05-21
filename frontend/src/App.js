@@ -2,19 +2,21 @@ import './App.css';
 import { Routes, Route } from 'react-router-dom';
 import Register from './components/Register';
 import LogIn from './components/LogIn';
-import Header from './components/Header';
-import InputBeforeLogIn from './components/InputBeforeLogIn';
 import HeaderAfterLogIn from './components/HeaderAfterLogIn';
-import InputAfterLogIn from './components/InputAfterLogIn';
+import Input from './components/Input';
+import SnapshotEntity from './components/SnapshotEntity';
 
 function App() {
+
+
   return (
     <div className=''>
       <HeaderAfterLogIn />
       <Routes>
-        <Route path='/' element={<InputAfterLogIn />} />
+        <Route path='/' element={<Input />} />
         <Route path='/register' element={<Register />} />
         <Route path='/login' element={<LogIn />} />
+        <Route path='/:id' element={<SnapshotEntity />} />
       </Routes>
     </div>
   );

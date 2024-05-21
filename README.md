@@ -23,9 +23,9 @@ Registered users enjoys the same functionality as guest users, plus:
 - Bookmark your favorite snapshots.
 
 ## Project structure
-This project contains 2 components: `Frontend` and `Backend`.
+This project contains 2 main components: `Frontend` and `Backend`.
 ### Frontend
-Written using:
+Developed using:
 - React.js
 - Tailwind CSS
 - Axios
@@ -33,55 +33,69 @@ Written using:
 The frontend is where the user will interact with, and handles talking with backend infrastructure to request actions/fetch data.
 
 ### Backend
-Written using:
+Developed using:
 - Flask (Python)
-- [pywb](https://github.com/webrecorder/pywb)
-- MySQL
-
+- MongoDB
+- [SingleFile](https://github.com/gildas-lormeau/SingleFile)
 The backend will host the app's APIs and main functionalities, such as crawling websites, archiving and retrieving snapshots.
 
-## API interface
-#### /auth/login
-Params: `username` (str), `password` (str)  
-Return:
+## Developers manual
+### Basic operations
+- Start all services:  `docker compose up -d`
+- View all logs:  `docker compose logs`
+  - View only logs from "main-api" service:  `docker compose logs main-api`
+- Rebuild "main-api" service after making changes:  `docker compose up -d --build main-api`
+- Stop all services:  `docker compose down`
+
+### API flow
+**1. Check if URL is already archived**
 ```
-{"success": false, "reason": "Wrong username or password."}
-{"success": true, "sessionid": "AAAAbbbbCCCC11112222eeee"}
+GET /api/archive/is_archived?url=https://www.github.com
+```
+```
+{"status":"not_archived","success":true}
+// status = not_archived / archiving / archived / unreachable
+```
+**2. Start archiving a webpage:**
+```
+GET /api/archive/do_archive?url=https://www.github.com
+```
+```
+{"msg":"Archiving target site, please wait.","success":true}
+```
+**3. Keep polling `/api/archive/is_archived` to check for progress, until it either returns `archived` or `unreachable`**
+```
+GET /api/archive/is_archived?url=https://www.github.com
+```
+```
+{"status":"not_archived","success":true}
+```
+**4. Get the list of archived snapshots of the requested URL**
+```
+GET /api/archive/list?url=https://www.github.com
+```
+```
+{
+    "snapshot_list": [
+        {
+            "created_time": "2024-05-11 20:17:42 UTC+0000",
+            "snapshot_id": "1715458662.5612893"
+        },
+        {
+            "created_time": "2024-05-07 20:24:11 UTC+0000",
+            "snapshot_id": "1715113451.011099"
+        }
+    ],
+    "success": true
+}
+```
+**5. View URL's archived snapshot**
+```
+GET /api/archive/view_raw?snapshot_id=1715113451.011099
+```
+```
+<!DOCTYPE html> <html> .................
 ```
 
-#### /auth/getsession
-Params: `sessionid`
-
-#### /auth/logout
-Params: `sessionid`
-
-#### /archive/isarchived
-Params: `sessionid`, `url`  
-Return: `state` = ( `not_archived`, `archiving`, `archived` )
-
-#### /archive/doarchive
-Params: `sessionid`, `url`  
-
-#### /archive/list
-Params: `sessionid`, `url`  
-Return:
-```
-list: [  
-  id: "name",
-  1: "2023-12-02",  
-  2: "2024-03-14",  
-  ....  
-]
-```
-
-#### /archive/view
-
-#### /bookmark/recent
-
-#### /bookmark/add
-
-#### /bookmark/list
-
-
-
-
+### Troubleshooting
+- "Have you tried turning it off and on again?"  `systemctl restart docker`
